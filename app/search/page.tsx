@@ -162,6 +162,12 @@ export default function SearchPage() {
               </span>
             </Link>
             <div className="flex items-center space-x-4">
+              <Link href="/search" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+                {getTranslation(selectedLanguage.code, 'clinic')}
+              </Link>
+              <Link href="/pharmacy" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
+                {getTranslation(selectedLanguage.code, 'pharmacy')}
+              </Link>
               <Link href="/profile" className="text-gray-700 hover:text-emerald-600 transition-colors">
                 {getTranslation(selectedLanguage.code, 'profile')}
               </Link>

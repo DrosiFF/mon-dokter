@@ -123,17 +123,13 @@ export default function PharmacyPage() {
               </span>
             </Link>
             <div className="flex items-center space-x-4">
-              <Link 
-                href="/search" 
-                className="text-gray-700 hover:text-emerald-600 transition-colors font-medium"
-              >
-                {getTranslation(selectedLanguage.code, 'doctor')}
+              <Link href="/search" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+                {getTranslation(selectedLanguage.code, 'clinic')}
               </Link>
-              <span className="text-emerald-600 font-semibold">{getTranslation(selectedLanguage.code, 'pharmacy')}</span>
-              <Link 
-                href="/profile" 
-                className="text-gray-700 hover:text-emerald-600 transition-colors"
-              >
+              <Link href="/pharmacy" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
+                {getTranslation(selectedLanguage.code, 'pharmacy')}
+              </Link>
+              <Link href="/profile" className="text-gray-700 hover:text-emerald-600 transition-colors">
                 {getTranslation(selectedLanguage.code, 'profile')}
               </Link>
               
