@@ -48,11 +48,11 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [selectedLanguage, setSelectedLanguageState] = useState<Language>(languages[0])
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   // Load saved language from localStorage on mount
   useEffect(() => {
-    setMounted(true)
+    setIsClient(true)
     const savedLanguageCode = localStorage.getItem('monDokterLanguage')
     if (savedLanguageCode) {
       const savedLanguage = languages.find(lang => lang.code === savedLanguageCode)
@@ -65,23 +65,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // Save language to localStorage when changed
   const setSelectedLanguage = (language: Language) => {
     setSelectedLanguageState(language)
-    if (mounted) {
+    if (isClient) {
       localStorage.setItem('monDokterLanguage', language.code)
     }
-  }
-
-  // Don't render children until mounted to prevent hydration issues
-  if (!mounted) {
-    return (
-      <LanguageContext.Provider value={{
-        selectedLanguage: languages[0],
-        setSelectedLanguage: () => {},
-        showLanguageDropdown: false,
-        setShowLanguageDropdown: () => {}
-      }}>
-        {children}
-      </LanguageContext.Provider>
-    )
   }
 
   return (
@@ -100,7 +86,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageContext)
   if (context === undefined) {
-    // Return default values if context is not available (during SSR or initial load)
     return {
       selectedLanguage: languages[0],
       setSelectedLanguage: () => {},
