@@ -1,11 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Search, MapPin, Filter, Users, ChevronDown, Star } from 'lucide-react'
+import { Search, MapPin, Filter, Users, ChevronDown, Star, Navigation } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import LanguagePicker from '../../components/LanguagePicker'
-import SimpleNavigation from '../../components/SimpleNavigation'
 import { useLanguage } from '../../lib/LanguageContext'
 import { getTranslation } from '../../lib/translations'
 
