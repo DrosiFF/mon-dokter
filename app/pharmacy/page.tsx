@@ -3,7 +3,6 @@
 import { Search, MapPin, Filter, Clock, Star, Navigation } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Logo from '../../components/Logo'
 import LanguagePicker from '../../components/LanguagePicker'
 import SimpleNavigation from '../../components/SimpleNavigation'
 import { useLanguage } from '../../lib/LanguageContext'
@@ -75,7 +74,6 @@ export default function PharmacyPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
-              <Logo size="md" />
               <span className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
                 MON DOKTER
               </span>

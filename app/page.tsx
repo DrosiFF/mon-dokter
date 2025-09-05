@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { Search, Calendar, Users, Shield, Pill, Globe } from 'lucide-react'
-import Logo from '../components/Logo'
 import LanguagePicker from '../components/LanguagePicker'
 import { useLanguage } from '../lib/LanguageContext'
 import { getTranslation } from '../lib/translations'
@@ -72,7 +71,6 @@ export default function HomePage() {
                 {/* Logo and branding - responsive sizing */}
                 <div className="mb-6 sm:mb-8 flex flex-col items-center justify-center gap-1 sm:gap-2">
                   <div className="flex items-center justify-center gap-2 sm:gap-3">
-                    <Logo size="lg" className="drop-shadow-lg w-10 h-10 sm:w-12 sm:h-12" />
                     <span className="text-white text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide">MON DOKTER</span>
                   </div>
                   <span className="text-cyan-200 text-sm sm:text-base lg:text-lg font-medium tracking-wide">
