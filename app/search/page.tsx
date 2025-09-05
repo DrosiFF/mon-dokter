@@ -79,6 +79,7 @@ export default function SearchPage() {
   const { selectedLanguage } = useLanguage()
   const [islandQuery, setIslandQuery] = useState('')
   const [showIslandDropdown, setShowIslandDropdown] = useState(false)
+  const [selectedIsland, setSelectedIsland] = useState('')
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   const filteredIslands = seychellesIslands.filter(island =>
@@ -104,6 +105,7 @@ export default function SearchPage() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}

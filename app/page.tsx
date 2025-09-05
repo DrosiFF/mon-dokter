@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <main className="flex-1">
       {/* Hero Section - Mobile First Design */}
-      <section className="relative bg-gradient-to-r from-cyan-500 via-blue-500 to-emerald-500 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-500 overflow-hidden">
         {/* Subtle Seychelles Flag Background */}
         <div className="absolute inset-0 opacity-10">
           <svg 
@@ -71,7 +71,7 @@ export default function HomePage() {
                 {/* Logo and branding - responsive sizing */}
                 <div className="mb-6 sm:mb-8 flex flex-col items-center justify-center gap-1 sm:gap-2">
                   <div className="flex items-center justify-center gap-2 sm:gap-3">
-                    <span className="text-white text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide">MON DOKTER</span>
+                    <h1 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wide">MON DOKTER</h1>
                   </div>
                   <span className="text-cyan-200 text-sm sm:text-base lg:text-lg font-medium tracking-wide">
                     {getTranslation(selectedLanguage.code, 'heroSlogan')}
@@ -82,9 +82,9 @@ export default function HomePage() {
                 <LanguagePicker variant="hero" className="mb-6 sm:mb-8" />
 
                 {/* Main heading - responsive typography */}
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
                   {getTranslation(selectedLanguage.code, 'heroTitle')}
-                </h1>
+                </h2>
                 
                 <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl leading-relaxed text-cyan-100 max-w-3xl mx-auto">
                   {getTranslation(selectedLanguage.code, 'heroSubtitle')}
@@ -151,6 +151,14 @@ export default function HomePage() {
       {/* MioDottore-style Feature Highlights */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              {getTranslation(selectedLanguage.code, 'howItWorks')}
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              {getTranslation(selectedLanguage.code, 'howItWorksDesc')}
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             
             {/* Find Doctor */}
