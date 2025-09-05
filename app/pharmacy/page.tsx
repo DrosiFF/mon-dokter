@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, MapPin, Filter, Clock, Star, Navigation, Users } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -110,6 +110,16 @@ const mockPharmacies = [
 export default function PharmacyPage() {
   const { selectedLanguage } = useLanguage()
   const [serviceType, setServiceType] = useState<'clinic' | 'pharmacy'>('pharmacy')
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  // Force input to update when serviceType changes
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.placeholder = serviceType === 'clinic' 
+        ? getTranslation(selectedLanguage.code, 'searchPlaceholderClinic')
+        : getTranslation(selectedLanguage.code, 'searchPlaceholderPharmacy')
+    }
+  }, [serviceType, selectedLanguage.code])
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -204,6 +214,7 @@ export default function PharmacyPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <input
+                    ref={searchInputRef}
                     type="text"
                     placeholder={serviceType === 'clinic' 
                       ? getTranslation(selectedLanguage.code, 'searchPlaceholderClinic')

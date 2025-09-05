@@ -124,6 +124,16 @@ export default function SearchPage() {
   const [selectedIsland, setSelectedIsland] = useState('')
   const [serviceType, setServiceType] = useState<'clinic' | 'pharmacy'>('clinic')
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  // Force input to update when serviceType changes
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.placeholder = serviceType === 'clinic' 
+        ? getTranslation(selectedLanguage.code, 'searchPlaceholderClinic')
+        : getTranslation(selectedLanguage.code, 'searchPlaceholderPharmacy')
+    }
+  }, [serviceType, selectedLanguage.code])
 
   const filteredIslands = seychellesIslands.filter(island =>
     island.name.toLowerCase().includes(islandQuery.toLowerCase())
@@ -245,6 +255,7 @@ export default function SearchPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <input
+                    ref={searchInputRef}
                     type="text"
                     placeholder={serviceType === 'clinic' 
                       ? getTranslation(selectedLanguage.code, 'searchPlaceholderClinic')
