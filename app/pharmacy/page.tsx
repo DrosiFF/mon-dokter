@@ -210,6 +210,8 @@ export default function PharmacyPage() {
                       : getTranslation(selectedLanguage.code, 'searchPlaceholderPharmacy')
                     }
                     className="w-full pl-10 pr-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-500"
+                    key={`search-${serviceType}`}
+                    defaultValue=""
                   />
                 </div>
               </div>
