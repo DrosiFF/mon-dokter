@@ -19,6 +19,49 @@ const seychellesIslands = [
   { name: 'Round Island', pharmacies: 1, mainCity: 'Round Island Resort' }
 ]
 
+// Mock pharmacy data for search page
+const mockPharmacies = [
+  {
+    id: '1',
+    name: 'Victoria Central Pharmacy',
+    address: 'Independence Avenue, Victoria',
+    island: 'Mahé',
+    rating: 4.8,
+    reviews: 127,
+    openHours: '07:00 - 21:00',
+    services: ['Tourist prescriptions', 'Travel medications', 'Suncare & tropical health', 'Resort delivery'],
+    phone: '+248 4 225 500',
+    image: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?w=300&h=200&fit=crop',
+    specialty: 'Main tourist hub - multilingual staff'
+  },
+  {
+    id: '2',
+    name: 'Beau Vallon Beach Pharmacy',
+    address: 'Beau Vallon Beach Road',
+    island: 'Mahé',
+    rating: 4.9,
+    reviews: 203,
+    openHours: '08:00 - 22:00',
+    services: ['Beach resort delivery', 'Emergency dive medicine', 'Tropical disease prevention', 'Sunburn treatment'],
+    phone: '+248 4 247 800',
+    image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=300&h=200&fit=crop',
+    specialty: 'Beach & water sports specialists'
+  },
+  {
+    id: '3',
+    name: 'Praslin Paradise Pharmacy',
+    address: 'Anse Volbert Village',
+    island: 'Praslin',
+    rating: 4.7,
+    reviews: 89,
+    openHours: '08:00 - 20:00',
+    services: ['Island hopping medical kit', 'Coco de Mer wellness products', 'Snorkeling safety', 'Hotel partnerships'],
+    phone: '+248 4 232 100',
+    image: 'https://images.unsplash.com/photo-1585435557343-3b092031d4c1?w=300&h=200&fit=crop',
+    specialty: 'Nature reserve health specialists'
+  }
+]
+
 // Mock data for demonstration
 const mockDoctors = [
   {
@@ -80,6 +123,7 @@ export default function SearchPage() {
   const [islandQuery, setIslandQuery] = useState('')
   const [showIslandDropdown, setShowIslandDropdown] = useState(false)
   const [selectedIsland, setSelectedIsland] = useState('')
+  const [serviceType, setServiceType] = useState<'clinic' | 'pharmacy'>('clinic')
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   const filteredIslands = seychellesIslands.filter(island =>
@@ -189,8 +233,39 @@ export default function SearchPage() {
             </p>
           </div>
 
-          {/* Service Type Buttons */}
-          <SimpleNavigation currentPage="search" />
+          {/* Service Type Toggle */}
+          <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setServiceType('clinic')}
+              className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 ${
+                serviceType === 'clinic'
+                  ? 'bg-white text-blue-600 shadow-lg'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              <Users className="h-5 w-5" />
+              {getTranslation(selectedLanguage.code, 'clinic')}
+            </button>
+            <button
+              onClick={() => setServiceType('pharmacy')}
+              className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 ${
+                serviceType === 'pharmacy'
+                  ? 'bg-white text-emerald-600 shadow-lg'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                <path d="M10 6h4"></path>
+                <path d="M10 10h4"></path>
+                <path d="M10 14h4"></path>
+                <path d="M10 18h4"></path>
+              </svg>
+              {getTranslation(selectedLanguage.code, 'pharmacy')}
+            </button>
+          </div>
           
           <div className="mt-8 mx-auto max-w-3xl">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -266,7 +341,10 @@ export default function SearchPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">
-            {mockDoctors.length} {getTranslation(selectedLanguage.code, 'doctorsFound')}
+            {serviceType === 'clinic' 
+              ? `${mockDoctors.length} ${getTranslation(selectedLanguage.code, 'doctorsFound')}`
+              : `${mockPharmacies.length} ${getTranslation(selectedLanguage.code, 'pharmaciesFound')}`
+            }
           </h2>
           <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
             <Filter className="h-4 w-4" />
@@ -275,70 +353,136 @@ export default function SearchPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {mockDoctors.map((doctor) => (
-            <div
-              key={doctor.id}
-              className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 border"
-            >
-              <div className="mb-4">
-                <Image
-                  src={doctor.image}
-                  alt={`Dr. ${doctor.firstName} ${doctor.lastName}`}
-                  width={400}
-                  height={128}
-                  className="w-full h-32 object-cover rounded-lg mb-4"
-                />
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Dr. {doctor.firstName} {doctor.lastName}
-                  </h3>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="text-sm font-medium text-gray-700">{doctor.rating}</span>
+          {serviceType === 'clinic' ? (
+            // Doctor cards
+            mockDoctors.map((doctor) => (
+              <div
+                key={doctor.id}
+                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 border"
+              >
+                <div className="mb-4">
+                  <Image
+                    src={doctor.image}
+                    alt={`Dr. ${doctor.firstName} ${doctor.lastName}`}
+                    width={400}
+                    height={128}
+                    className="w-full h-32 object-cover rounded-lg mb-4"
+                  />
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Dr. {doctor.firstName} {doctor.lastName}
+                    </h3>
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="text-sm font-medium text-gray-700">{doctor.rating}</span>
+                    </div>
+                  </div>
+                  <p className="text-blue-600 font-medium text-sm mb-1">{doctor.specialty}</p>
+                </div>
+                
+                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                  <MapPin className="h-4 w-4" />
+                  <span>{doctor.clinic}, {doctor.city}</span>
+                </div>
+                
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-1">
+                    {doctor.services && doctor.services.slice(0, 3).map((service, index) => (
+                      <span
+                        key={index}
+                        className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full"
+                      >
+                        {service}
+                      </span>
+                    ))}
+                    {doctor.services && doctor.services.length > 3 && (
+                      <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
+                        +{doctor.services.length - 3} more
+                      </span>
+                    )}
                   </div>
                 </div>
-                <p className="text-blue-600 font-medium text-sm mb-1">{doctor.specialty}</p>
-              </div>
-              
-              <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                <MapPin className="h-4 w-4" />
-                <span>{doctor.clinic}, {doctor.city}</span>
-              </div>
-              
-              <div className="mb-4">
-                <div className="flex flex-wrap gap-1">
-                  {doctor.services && doctor.services.slice(0, 3).map((service, index) => (
-                    <span
-                      key={index}
-                      className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full"
-                    >
-                      {service}
-                    </span>
-                  ))}
-                  {doctor.services && doctor.services.length > 3 && (
-                    <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
-                      +{doctor.services.length - 3} more
-                    </span>
-                  )}
+                
+                <div className="flex gap-2">
+                  <Link
+                    href={`/book/${doctor.id}`}
+                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm text-center"
+                  >
+                    {getTranslation(selectedLanguage.code, 'bookAppointment')}
+                  </Link>
+                  <Link
+                    href={`/doctor/${doctor.slug}`}
+                    className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                  >
+                    <Users className="h-4 w-4" />
+                  </Link>
                 </div>
               </div>
-              
-              <div className="flex gap-2">
-                <Link
-                  href={`/book/${doctor.id}`}
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm text-center"
-                >
-                  {getTranslation(selectedLanguage.code, 'bookAppointment')}
-                </Link>
-                <Link
-                  href={`/doctor/${doctor.slug}`}
-                  className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
-                >
-                  <Users className="h-4 w-4" />
-                </Link>
+            ))
+          ) : (
+            // Pharmacy cards
+            mockPharmacies.map((pharmacy) => (
+              <div
+                key={pharmacy.id}
+                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6 border"
+              >
+                <div className="mb-4">
+                  <Image
+                    src={pharmacy.image}
+                    alt={pharmacy.name}
+                    width={400}
+                    height={128}
+                    className="w-full h-32 object-cover rounded-lg mb-4"
+                  />
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {pharmacy.name}
+                    </h3>
+                    <div className="flex items-center gap-1">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="text-sm font-medium text-gray-700">{pharmacy.rating}</span>
+                    </div>
+                  </div>
+                  <p className="text-emerald-600 font-medium text-sm mb-1">{pharmacy.specialty}</p>
+                </div>
+                
+                <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                  <MapPin className="h-4 w-4" />
+                  <span>{pharmacy.address}, {pharmacy.island}</span>
+                </div>
+                
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-1">
+                    {pharmacy.services && pharmacy.services.slice(0, 3).map((service, index) => (
+                      <span
+                        key={index}
+                        className="inline-block px-2 py-1 text-xs bg-emerald-100 text-emerald-700 rounded-full"
+                      >
+                        {service}
+                      </span>
+                    ))}
+                    {pharmacy.services && pharmacy.services.length > 3 && (
+                      <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
+                        +{pharmacy.services.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  <a
+                    href={`tel:${pharmacy.phone}`}
+                    className="flex-1 bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors text-sm text-center"
+                  >
+                    {getTranslation(selectedLanguage.code, 'call')}
+                  </a>
+                  <button className="px-4 py-2 border border-emerald-600 text-emerald-600 rounded-lg hover:bg-emerald-50 transition-colors">
+                    <Navigation className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
