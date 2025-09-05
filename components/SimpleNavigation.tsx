@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function SimpleNavigation({ currentPage }: { currentPage: 'search' | 'pharmacy' }) {
   return (
     <div className="mt-8 flex justify-center gap-4">
@@ -12,7 +14,7 @@ export default function SimpleNavigation({ currentPage }: { currentPage: 'search
             </svg>
             Clinic
           </span>
-          <a
+          <Link
             href="/pharmacy"
             className="px-6 py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-400 hover:shadow-lg flex items-center gap-2 shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer border-2 border-transparent hover:border-emerald-300 no-underline"
           >
@@ -26,11 +28,11 @@ export default function SimpleNavigation({ currentPage }: { currentPage: 'search
               <path d="M10 18h4"></path>
             </svg>
             Pharmacy →
-          </a>
+          </Link>
         </>
       ) : (
         <>
-          <a
+          <Link
             href="/search"
             className="px-6 py-3 bg-white text-emerald-600 rounded-full font-semibold hover:bg-emerald-50 hover:shadow-lg flex items-center gap-2 shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer border-2 border-transparent hover:border-emerald-200 no-underline"
           >
@@ -41,7 +43,7 @@ export default function SimpleNavigation({ currentPage }: { currentPage: 'search
               <circle cx="9" cy="7" r="4"></circle>
             </svg>
             Doctor →
-          </a>
+          </Link>
           <span className="px-6 py-3 bg-emerald-500 text-white rounded-full font-semibold flex items-center gap-2 shadow-lg cursor-default opacity-90">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
               <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
