@@ -1,7 +1,6 @@
 import { MapPin, Star, Calendar, Clock, Euro } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Logo from '../../../components/Logo'
 import MapView from '../../../components/MapView'
 
 // Mock data - in a real app this would come from your database
@@ -52,7 +51,6 @@ export default function DoctorProfilePage({ params }: PageProps) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
-              <Logo size="md" />
               <span className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">
                 MON DOKTER
               </span>
