@@ -6,6 +6,8 @@ export const translations = {
     heroTitle: 'Find doctors & pharmacies across Seychelles',
     heroSubtitle: 'Book appointments with verified healthcare professionals on all islands. From Mahé to Praslin, La Digue and beyond.',
     searchPlaceholder: 'Search doctors, specialties...',
+    searchPlaceholderClinic: 'Search doctors, specialties...',
+    searchPlaceholderPharmacy: 'Search pharmacy, medication...',
     
     // Navigation
     doctor: 'Doctor',
@@ -81,6 +83,8 @@ export const translations = {
     heroTitle: 'Trouvez médecins et pharmacies aux Seychelles',
     heroSubtitle: 'Prenez rendez-vous avec des professionnels de santé vérifiés sur toutes les îles. De Mahé à Praslin, La Digue et au-delà.',
     searchPlaceholder: 'Rechercher médecins, spécialités...',
+    searchPlaceholderClinic: 'Rechercher médecins, spécialités...',
+    searchPlaceholderPharmacy: 'Rechercher pharmacie, médicaments...',
     
     // Navigation
     doctor: 'Médecin',
@@ -156,6 +160,8 @@ export const translations = {
     heroTitle: 'Ganny dokter ek farmasyen dan tou Sesel',
     heroSubtitle: 'Pran randevou ek dokter ki nou konnen dan tou zil. Depi Mahe ziska Praslin, La Digue ek pi lwen.',
     searchPlaceholder: 'Serser dokter, spesyalis...',
+    searchPlaceholderClinic: 'Serser dokter, spesyalis...',
+    searchPlaceholderPharmacy: 'Serser farmasi, medikaman...',
     
     // Navigation
     doctor: 'Dokter',

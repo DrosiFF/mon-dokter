@@ -246,7 +246,10 @@ export default function SearchPage() {
                   <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <input
                     type="text"
-                    placeholder={getTranslation(selectedLanguage.code, 'searchPlaceholder')}
+                    placeholder={serviceType === 'clinic' 
+                      ? getTranslation(selectedLanguage.code, 'searchPlaceholderClinic')
+                      : getTranslation(selectedLanguage.code, 'searchPlaceholderPharmacy')
+                    }
                     className="w-full pl-10 pr-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -285,7 +288,10 @@ export default function SearchPage() {
                             </div>
                             <div className="text-right">
                               <div className="text-sm font-medium text-emerald-600">
-                                {island.pharmacies} pharmacies
+                                {serviceType === 'clinic' 
+                                  ? `${island.pharmacies + 2} doctors`
+                                  : `${island.pharmacies} pharmacies`
+                                }
                               </div>
                               <div className="text-xs text-gray-400">available</div>
                             </div>

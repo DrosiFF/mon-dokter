@@ -205,7 +205,10 @@ export default function PharmacyPage() {
                   <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <input
                     type="text"
-                    placeholder={getTranslation(selectedLanguage.code, 'pharmacySearchPlaceholder')}
+                    placeholder={serviceType === 'clinic' 
+                      ? getTranslation(selectedLanguage.code, 'searchPlaceholderClinic')
+                      : getTranslation(selectedLanguage.code, 'searchPlaceholderPharmacy')
+                    }
                     className="w-full pl-10 pr-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-green-500"
                   />
                 </div>
