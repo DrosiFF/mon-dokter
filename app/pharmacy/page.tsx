@@ -197,39 +197,6 @@ export default function PharmacyPage() {
             </p>
           </div>
 
-          {/* Service Type Toggle */}
-          <div className="flex justify-center gap-4 mb-8">
-            <button
-              onClick={() => setServiceType('clinic')}
-              className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 ${
-                serviceType === 'clinic'
-                  ? 'bg-white text-blue-600 shadow-lg'
-                  : 'bg-white/20 text-white hover:bg-white/30'
-              }`}
-            >
-              <Users className="h-5 w-5" />
-              {getTranslation(selectedLanguage.code, 'clinic')}
-            </button>
-            <button
-              onClick={() => setServiceType('pharmacy')}
-              className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 ${
-                serviceType === 'pharmacy'
-                  ? 'bg-white text-emerald-600 shadow-lg'
-                  : 'bg-white/20 text-white hover:bg-white/30'
-              }`}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-                <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
-                <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
-                <path d="M10 6h4"></path>
-                <path d="M10 10h4"></path>
-                <path d="M10 14h4"></path>
-                <path d="M10 18h4"></path>
-              </svg>
-              {getTranslation(selectedLanguage.code, 'pharmacy')}
-            </button>
-          </div>
           
           <div className="mt-8 mx-auto max-w-3xl">
             <div className="flex flex-col sm:flex-row gap-4">
@@ -262,6 +229,50 @@ export default function PharmacyPage() {
         </div>
       </div>
 
+      {/* Service Type Toggle - Outside hero section */}
+      <div className="bg-white py-6 border-b">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={() => {
+                console.log('Clinic button clicked, current serviceType:', serviceType)
+                setServiceType('clinic')
+              }}
+              className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 cursor-pointer ${
+                serviceType === 'clinic'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <Users className="h-5 w-5" />
+              {getTranslation(selectedLanguage.code, 'clinic')}
+            </button>
+            <button
+              onClick={() => {
+                console.log('Pharmacy button clicked, current serviceType:', serviceType)
+                setServiceType('pharmacy')
+              }}
+              className={`px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-all duration-200 cursor-pointer ${
+                serviceType === 'pharmacy'
+                  ? 'bg-emerald-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                <path d="M10 6h4"></path>
+                <path d="M10 10h4"></path>
+                <path d="M10 14h4"></path>
+                <path d="M10 18h4"></path>
+              </svg>
+              {getTranslation(selectedLanguage.code, 'pharmacy')}
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Results Section */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
@@ -270,6 +281,7 @@ export default function PharmacyPage() {
               ? `${mockPharmacies.length} ${getTranslation(selectedLanguage.code, 'pharmaciesFound')}`
               : `${mockDoctors.length} ${getTranslation(selectedLanguage.code, 'doctorsFound')}`
             }
+            <span className="text-sm text-gray-500 ml-2">(Current: {serviceType})</span>
           </h2>
           <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
             <Filter className="h-4 w-4" />
