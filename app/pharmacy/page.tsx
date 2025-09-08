@@ -89,7 +89,7 @@ const mockPharmacies = [
     openHours: '08:00 - 20:00',
     services: ['Island hopping medical kit', 'Coco de Mer wellness products', 'Snorkeling safety', 'Hotel partnerships'],
     phone: '+248 4 232 100',
-    image: 'https://images.unsplash.com/photo-1585435557343-3b092031d4c1?w=300&h=200&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=200&fit=crop',
     specialty: 'Nature reserve health specialists'
   },
   {

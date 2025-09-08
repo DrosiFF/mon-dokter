@@ -120,3 +120,4 @@ export default function MapView({ latitude, longitude, title, address, className
   )
 }
 
+

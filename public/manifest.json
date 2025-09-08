@@ -1,0 +1,18 @@
+{
+  "name": "MON DOKTER - Healthcare in Seychelles",
+  "short_name": "MON DOKTER",
+  "description": "Find and book appointments with doctors and pharmacies across all Seychelles islands",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0ea5e9",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
+

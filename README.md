@@ -3,6 +3,23 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## Getting Started
 
 First, run the development server:
+# Mon Dokter (Seychelles)
+
+MVP: Local clinic & specialist booking (MioDottore style).
+
+## Stack
+- Next.js (App Router), TypeScript, Tailwind
+- Booking engine: SimplyBook.me (MVP) or Cal.com (Phase 2)
+- n8n for WhatsApp reminders (webhook driven)
+- Prisma + Postgres (Supabase ok), no PHI at booking
+
+## Setup
+1. `cp .env.example .env.local` and fill values.
+2. `npm i`
+3. `npx prisma migrate dev`
+4. `npm run dev`
+
+## Environment
 
 ```bash
 npm run dev

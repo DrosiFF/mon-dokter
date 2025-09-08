@@ -36,14 +36,9 @@ const mockDoctor = {
   ]
 }
 
-interface PageProps {
-  params: {
-    slug: string
-  }
-}
-
-export default function DoctorProfilePage({ params }: PageProps) {
-  // Note: params is required by Next.js but not used in this component
+export default async function DoctorProfilePage({ params }: { params: Promise<{ slug: string }> }) {
+  // Next.js 15 passes promised params; we await to satisfy type checks (unused)
+  await params
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
