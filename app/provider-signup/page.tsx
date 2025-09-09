@@ -213,18 +213,20 @@ export default function ProviderSignupPage() {
                     placeholder="contact@clinic.sc"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number - <span className="text-xs text-gray-500">(Optional for Seychelles 🇸🇨)</span>
+                {/* Phone Number */}
+                <div className="space-y-1">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number <span className="text-xs text-gray-500">(optional)</span>
                   </label>
                   <input
+                    id="phone"
                     type="tel"
-                    inputMode="tel"
-                    autoComplete="tel"
+                    placeholder="+248 2X XX XX"
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                    className="w-40 px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-white text-gray-900 placeholder-gray-500"
-                    placeholder="+248 4 123 456"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
+                    autoComplete="tel"
+                    inputMode="tel"
                     style={{ display: 'block', visibility: 'visible' }}
                   />
                 </div>
