@@ -77,13 +77,41 @@ export default function ProviderSignupPage() {
   }
 
   const handleSubmit = async () => {
-    // Here we would integrate with SimplyBook.me API to create the provider account
-    console.log('Creating SimplyBook.me account for:', formData)
-    
-    // Simulate API call
-    setTimeout(() => {
-      setStep(4) // Success step
-    }, 2000)
+    try {
+      console.log('Creating provider account for:', formData)
+      
+      // Call your API to create provider account in Supabase
+      const response = await fetch('/api/simplybook/create-account', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          // Add the additional fields that might be missing
+          address: formData.address,
+          island: formData.island,
+          description: formData.description
+        })
+      })
+
+      const result = await response.json()
+      
+      if (result.success) {
+        // Store the provider data and SimplyBook URL
+        setFormData(prev => ({ 
+          ...prev, 
+          providerId: result.provider.id,
+          simplybookUrl: result.simplybookUrl 
+        }))
+        setStep(4) // Success step
+      } else {
+        alert(`Failed to create provider account: ${result.error}`)
+      }
+    } catch (error) {
+      console.error('Error creating provider account:', error)
+      alert('Error creating provider account. Please try again.')
+    }
   }
 
   return (

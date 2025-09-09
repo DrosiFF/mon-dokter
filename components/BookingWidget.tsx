@@ -77,15 +77,41 @@ export default function BookingWidget({
     return dates
   }
 
-  const handleBookingSubmit = () => {
+  const handleBookingSubmit = async () => {
     if (simplybookUrl) {
-      // Redirect to actual SimplyBook.me booking page
-      window.open(simplybookUrl, '_blank')
+      // Open SimplyBook.me with pre-filled information
+      const bookingUrl = `${simplybookUrl}?service=${encodeURIComponent(selectedService)}&date=${selectedDate}&time=${selectedTime}`
+      window.open(bookingUrl, '_blank')
     } else {
-      // For demo purposes, show success message
-      alert(`Booking request sent for ${selectedService} on ${selectedDate} at ${selectedTime}`)
-      setShowBookingForm(false)
+      // Handle booking through your own system
+      try {
+        const response = await fetch('/api/appointments/book', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            providerId,
+            serviceType: selectedService,
+            selectedDate,
+            selectedTime,
+            patientNotes: ''
+          })
+        })
+
+        const result = await response.json()
+        
+        if (result.success) {
+          alert(`✅ Appointment booked successfully!\n\nService: ${selectedService}\nDate: ${selectedDate}\nTime: ${selectedTime}`)
+        } else {
+          alert('❌ Failed to book appointment. Please try again.')
+        }
+      } catch (error) {
+        console.error('Booking error:', error)
+        alert('❌ Error booking appointment. Please try again.')
+      }
     }
+    setShowBookingForm(false)
   }
 
   return (
