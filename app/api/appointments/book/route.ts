@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
-import { supabase } from '../../../lib/supabase'
+import { supabase } from '../../../../lib/supabase'
+import { sendBookingConfirmationEmail, sendProviderNotificationEmail } from '../../../../lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -82,13 +83,42 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to create appointment')
     }
 
-    // Step 4: Send confirmation (you can implement email later)
-    // await sendBookingConfirmation(appointment)
+    // Step 4: Send email notifications
+    try {
+      // Send confirmation email to patient
+      await sendBookingConfirmationEmail({
+        patientName: patient.full_name,
+        patientEmail: patient.email,
+        providerName: `Dr. ${appointment.provider_name}`,
+        clinicName: appointment.clinic_name || 'Healthcare Clinic',
+        serviceName: appointment.service_name,
+        appointmentDate: new Date(appointment.appointment_date).toLocaleDateString(),
+        appointmentTime: appointment.appointment_time,
+        clinicAddress: 'Victoria, Mahé, Seychelles', // TODO: Get from provider data
+        clinicPhone: '+248 4 123 456', // TODO: Get from provider data
+        bookingId: appointment.id
+      });
+
+      // Send notification email to provider
+      await sendProviderNotificationEmail({
+        providerName: appointment.provider_name,
+        providerEmail: 'provider@example.com', // TODO: Get from provider data
+        patientName: patient.full_name,
+        serviceName: appointment.service_name,
+        appointmentDate: new Date(appointment.appointment_date).toLocaleDateString(),
+        appointmentTime: appointment.appointment_time,
+        bookingId: appointment.id,
+        action: 'new_booking'
+      });
+    } catch (emailError) {
+      console.error('Email notification failed:', emailError);
+      // Don't fail the booking if email fails
+    }
 
     return NextResponse.json({ 
       success: true, 
       appointment,
-      message: 'Appointment booked successfully!'
+      message: 'Appointment booked successfully! Confirmation email sent.'
     })
   } catch (error) {
     console.error('Booking error:', error)

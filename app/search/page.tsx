@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { Search, MapPin, Filter, Users, ChevronDown, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -26,7 +26,7 @@ const medicalSpecialties = [
   'Psychologist'
 ]
 
-export default function SearchPage() {
+function SearchPageContent() {
   const { user } = useUser()
   const { selectedLanguage } = useLanguage()
   const searchParams = useSearchParams()
@@ -257,16 +257,16 @@ export default function SearchPage() {
                 </div>
               ) : realProviders.length > 0 ? (
                 // Real provider cards from Supabase
-                realProviders.map((provider) => (
+                realProviders.map((provider: any) => (
                   <BookingWidget
                     key={provider.id}
                     providerId={provider.id}
-                    providerName={`${provider.firstName} ${provider.lastName}`}
+                    providerName={provider.profile?.name || 'Healthcare Provider'}
                     providerType="clinic"
-                    simplybookUrl={provider.simplybookUrl || "https://simplybook.me/en/"}
-                    location={`${provider.clinic}, ${provider.city}`}
-                    rating={provider.rating}
-                    specialties={provider.services || [provider.specialty]}
+                    simplybookUrl="https://simplybook.me/en/"
+                    location={`${provider.clinic?.name || 'Clinic'}, ${provider.clinic?.island || 'Seychelles'}`}
+                    rating={4.8}
+                    specialties={provider.specialties ? JSON.parse(provider.specialties) : []}
                   />
                 ))
               ) : (
@@ -342,4 +342,12 @@ export default function SearchPage() {
       </div>
     </div>
   )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600"></div></div>}>
+      <SearchPageContent />
+    </Suspense>
+  );
 }

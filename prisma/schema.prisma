@@ -8,106 +8,125 @@ datasource db {
 }
 
 enum Role {
-  PATIENT
-  DOCTOR
+  ADMIN
+  PROVIDER
+  STAFF
+  USER
 }
 
-enum AppointmentStatus {
+enum BookingStatus {
   PENDING
-  CONFIRMED
+  ACCEPTED
+  DECLINED
   CANCELLED
+  COMPLETED
 }
 
-model User {
-  id        String   @id @default(cuid())
-  clerkId   String   @unique
-  role      Role
-  email     String   @unique
-  createdAt DateTime @default(now())
-  patient   Patient?
-  doctor    Doctor?
-}
-
-model Patient {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
-  firstName String
-  lastName  String
+model Profile {
+  id        String   @id @default(uuid())
+  authId    String   @unique // Clerk user id
+  role      Role     @default(USER)
   phone     String?
-  appointments Appointment[]
-}
-
-model Doctor {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
-  slug      String   @unique
-  firstName String
-  lastName  String
-  bio       String?
-  clinicId  String?
-  clinic    Clinic?  @relation(fields: [clinicId], references: [id])
-  specialties SpecialtyOnDoctor[]
-  slots     AvailabilitySlot[]
-  appointments Appointment[]
-  ratingAvg Float?   @default(4.8)
+  name      String?
+  email     String?
+  provider  Provider?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Clinic {
-  id       String  @id @default(cuid())
-  name     String
-  address  String
-  cityId   String
-  city     City    @relation(fields: [cityId], references: [id])
-  doctors  Doctor[]
-  tz       String  @default("Indian/Mahe")
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  address   String?
+  phone     String?
+  logoUrl   String?
+  island    String?  // Seychelles specific
+  providers Provider[]
+  services  Service[]
+  pharmacyProducts PharmacyProduct[]
+  integrations Integration[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model City {
-  id      String  @id @default(cuid())
-  name    String
-  country String  @default("IT") // set "SC" if Seychelles instances later
-  clinics Clinic[]
+model Provider {
+  id         String   @id @default(uuid())
+  profileId  String   @unique
+  clinicId   String?
+  bio        String?
+  specialties String? // JSON string of specialties array
+  slug       String   @unique
+  profile    Profile  @relation(fields: [profileId], references: [id])
+  clinic     Clinic?  @relation(fields: [clinicId], references: [id])
+  services   Service[]
+  bookings   Booking[]
+  integrations Integration[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-model Specialty {
-  id    String  @id @default(cuid())
-  name  String  @unique
-  slug  String  @unique
-  doctors SpecialtyOnDoctor[]
+model Service {
+  id          String   @id @default(uuid())
+  clinicId    String?
+  providerId  String?
+  name        String
+  description String?
+  durationMin Int      @default(30)
+  price       Decimal  @db.Decimal(10,2)
+  isActive    Boolean  @default(true)
+  clinic      Clinic?  @relation(fields: [clinicId], references: [id])
+  provider    Provider? @relation(fields: [providerId], references: [id])
+  bookings    Booking[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-model SpecialtyOnDoctor {
-  doctorId    String
-  specialtyId String
-  doctor      Doctor    @relation(fields: [doctorId], references: [id])
-  specialty   Specialty @relation(fields: [specialtyId], references: [id])
-  @@id([doctorId, specialtyId])
+model PharmacyProduct {
+  id        String   @id @default(uuid())
+  clinicId  String?
+  name      String
+  sku       String?  @unique
+  price     Decimal  @db.Decimal(10,2)
+  stock     Int      @default(0)
+  category  String?
+  description String?
+  imageUrl  String?
+  isActive  Boolean  @default(true)
+  clinic    Clinic?  @relation(fields: [clinicId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model AvailabilitySlot {
-  id        String   @id @default(cuid())
-  doctorId  String
-  doctor    Doctor   @relation(fields: [doctorId], references: [id])
-  start     DateTime // UTC
-  end       DateTime // UTC
-  capacity  Int      @default(1)
-  booked    Int      @default(0)
-  appointments Appointment[]
-  @@index([doctorId, start])
+model Booking {
+  id            String        @id @default(uuid())
+  simplybookId  String?       @unique // SimplyBook booking ID
+  serviceId     String
+  providerId    String
+  clientName    String
+  clientEmail   String?
+  clientPhone   String?
+  start         DateTime
+  end           DateTime
+  status        BookingStatus @default(PENDING)
+  notes         String?
+  service       Service       @relation(fields: [serviceId], references: [id])
+  provider      Provider      @relation(fields: [providerId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
-model Appointment {
-  id         String            @id @default(cuid())
-  patientId  String
-  doctorId   String
-  slotId     String
-  status     AppointmentStatus @default(PENDING)
-  reason     String?
-  createdAt  DateTime          @default(now())
-  patient    Patient           @relation(fields: [patientId], references: [id])
-  doctor     Doctor            @relation(fields: [doctorId], references: [id])
-  slot       AvailabilitySlot  @relation(fields: [slotId], references: [id])
-  @@index([doctorId, createdAt])
+model Integration {
+  id          String   @id @default(uuid())
+  providerId  String?
+  clinicId    String?
+  type        String   // 'simplybook', 'cal.com', etc.
+  company     String?  // SimplyBook company alias
+  apiUser     String?
+  apiKey      String?
+  isActive    Boolean  @default(true)
+  provider    Provider? @relation(fields: [providerId], references: [id])
+  clinic      Clinic?   @relation(fields: [clinicId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

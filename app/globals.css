@@ -39,3 +39,93 @@ input[name*="phoneNumber"],
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+  
+  /* Better spacing on mobile */
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Optimize text for mobile */
+  h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  /* Better form inputs on mobile */
+  input[type="text"], 
+  input[type="email"], 
+  input[type="tel"], 
+  input[type="password"],
+  textarea, 
+  select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+}
+
+/* PWA Optimizations */
+@media (display-mode: standalone) {
+  /* Hide browser UI when installed as PWA */
+  .pwa-hide {
+    display: none;
+  }
+  
+  /* Add safe area padding for notched devices */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Loading animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Better focus states for accessibility */
+button:focus, 
+a:focus, 
+input:focus, 
+select:focus, 
+textarea:focus {
+  outline: 2px solid #0891b2;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}

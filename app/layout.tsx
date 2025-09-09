@@ -36,6 +36,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        {/* PWA Meta Tags */}
+        <meta name="application-name" content="MON DOKTER" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="MON DOKTER" />
+        <meta name="description" content="Healthcare booking platform for Seychelles" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#0891b2" />
+        
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        
+        {/* Apple Touch Icons */}
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
+        
+        {/* Favicon */}
+        <link rel="icon" type="image/svg+xml" href="/icons/icon-192x192.svg" />
+      
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
         <meta name="theme-color" content="#0ea5e9" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

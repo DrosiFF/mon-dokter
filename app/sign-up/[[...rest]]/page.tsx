@@ -77,7 +77,6 @@ export default function SignUpPage() {
               afterSignUpUrl="/profile"
               redirectUrl="/profile"
               // Force skip phone verification
-              skipInvitationScreen={true}
             />
           </div>
 

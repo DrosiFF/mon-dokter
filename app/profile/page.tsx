@@ -3,6 +3,7 @@
 import { useUser, UserButton, SignOutButton } from '@clerk/nextjs'
 import { useState } from 'react'
 import Link from 'next/link'
+import AdminLink from '../../components/AdminLink'
 import { 
   User, 
   Calendar, 
@@ -122,6 +123,7 @@ export default function ProfilePage() {
                 </div>
                 
                 <div className="flex gap-3">
+                  <AdminLink variant="button" />
                   <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
                     <Edit3 className="w-4 h-4" />
                     Edit Profile

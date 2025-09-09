@@ -32,7 +32,7 @@ export default function ProviderSignupPage() {
     phone: '',
     address: '',
     island: '',
-    specialties: [],
+    specialties: [] as string[],
     description: '',
     operatingHours: {
       monday: { open: '09:00', close: '17:00', closed: false },
@@ -78,34 +78,40 @@ export default function ProviderSignupPage() {
 
   const handleSubmit = async () => {
     try {
-      console.log('Creating provider account for:', formData)
+      const requestData = {
+        name: formData.ownerName,
+        bio: formData.description,
+        specialties: formData.specialties,
+        phone: formData.phone,
+        clinicName: formData.businessName,
+        clinicAddress: formData.address,
+        island: formData.island,
+        email: formData.email
+      };
       
-      // Call your API to create provider account in Supabase
-      const response = await fetch('/api/simplybook/create-account', {
+      console.log('Creating provider account with data:', requestData)
+      
+      // Call your API to create provider account
+      const response = await fetch('/api/provider/onboard', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          // Add the additional fields that might be missing
-          address: formData.address,
-          island: formData.island,
-          description: formData.description
-        })
+        body: JSON.stringify(requestData)
       })
 
       const result = await response.json()
       
-      if (result.success) {
+      if (result.message || result.success) {
         // Store the provider data and SimplyBook URL
         setFormData(prev => ({ 
           ...prev, 
-          providerId: result.provider.id,
-          simplybookUrl: result.simplybookUrl 
+          providerId: result.providerId || (result.provider ? result.provider.id : 'temp-id'),
+          simplybookUrl: result.simplybookUrl || null
         }))
         setStep(4) // Success step
       } else {
+        console.error('API Error Response:', result);
         alert(`Failed to create provider account: ${result.error}`)
       }
     } catch (error) {

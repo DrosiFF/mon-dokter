@@ -8,6 +8,7 @@ import { UserButton, useUser } from '@clerk/nextjs'
 import LanguagePicker from '../../components/LanguagePicker'
 import { useLanguage } from '../../lib/LanguageContext'
 import { getTranslation } from '../../lib/translations'
+import PharmacyProductGrid from '../../components/PharmacyProductGrid'
 
 // Mock doctor data for pharmacy page
 const mockDoctors = [
@@ -494,6 +495,11 @@ export default function PharmacyPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Pharmacy Products Section */}
+      <section className="py-16 bg-gray-50">
+        <PharmacyProductGrid />
       </section>
     </div>
   )
