@@ -13,7 +13,7 @@ const mockDoctor = {
   clinic: 'San Giuseppe Clinic',
   city: 'Rome',
   consultationFee: 120,
-  image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&h=200&fit=crop&crop=face'
+  image: '/images/placeholders/doctor-male.svg'
 }
 
 const availableSlots = [
@@ -41,44 +41,47 @@ export default function BookingForm({ doctorId: _doctorId }: { doctorId?: string
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm">
+      {/* Header - Mobile optimized */}
+      <div className="bg-white shadow-sm sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">
+          <div className="flex h-16 sm:h-18 items-center justify-between">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">
                 MON DOKTER
               </span>
             </Link>
             <Link 
               href={`/doctor/dr-mario-rossi`}
-              className="flex items-center gap-2 text-gray-700 hover:text-blue-600"
+              className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to profile
+              <span className="hidden sm:inline">Back to profile</span>
+              <span className="sm:hidden">Back</span>
             </Link>
           </div>
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="mb-8 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 leading-tight">
             Book an appointment
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-base sm:text-lg">
             Fill out the form to book your visit
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-blue-600" />
+            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+              {/* Date Selection - Mobile optimized */}
+              <div className="bg-white rounded-2xl shadow-sm p-6 sm:p-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                  <Calendar className="h-6 w-6 text-blue-600" />
                   Select date
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                   {availableSlots.map((day) => (
                     <button
                       key={day.date}
@@ -87,18 +90,18 @@ export default function BookingForm({ doctorId: _doctorId }: { doctorId?: string
                         setSelectedDate(day.date)
                         setSelectedTime('')
                       }}
-                      className={`p-3 text-center border rounded-lg transition-colors ${
+                      className={`p-4 sm:p-5 text-center border-2 rounded-2xl transition-all duration-300 min-h-[80px] sm:min-h-[90px] ${
                         selectedDate === day.date
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-blue-500 bg-blue-50 text-blue-700 scale-105 shadow-lg'
+                          : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:scale-105'
                       }`}
                     >
-                      <div className="font-medium">
+                      <div className="font-bold text-sm sm:text-base">
                         {new Date(day.date).toLocaleDateString('it-IT', { 
                           weekday: 'short' 
                         })}
                       </div>
-                      <div className="text-sm">
+                      <div className="text-xs sm:text-sm mt-1 text-gray-600">
                         {new Date(day.date).toLocaleDateString('it-IT', { 
                           day: 'numeric', 
                           month: 'short' 

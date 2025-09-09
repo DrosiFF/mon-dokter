@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from '../lib/LanguageContext';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,9 +49,11 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="min-h-screen flex flex-col">
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
+          <ClerkProvider>
+            <LanguageProvider>
+              {children}
+            </LanguageProvider>
+          </ClerkProvider>
         </div>
       </body>
     </html>

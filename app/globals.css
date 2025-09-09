@@ -1,26 +1,41 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Custom scrollbar styles for dropdown */
+.specialty-dropdown::-webkit-scrollbar {
+  width: 8px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.specialty-dropdown::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.specialty-dropdown::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.specialty-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Force hide ONLY Clerk phone verification elements for Seychelles */
+.cl-phoneInputBox,
+.cl-formFieldAction:has(input[type="tel"]),
+.cl-identityPreview:has([data-localization-key*="phone"]),
+.cl-formResendCodeLink:has([data-localization-key*="sms"]),
+.cl-otpCodeFieldInput,
+input[name*="phoneNumber"],
+/* Only hide tel inputs within Clerk components, not all tel inputs */
+.cl-signUp-start input[type="tel"],
+.cl-signIn-start input[type="tel"],
+[data-localization-key="formFieldLabel__phoneNumber"],
+[data-localization-key="formFieldInputPlaceholder__phoneNumber"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }

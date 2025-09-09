@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Search, MapPin, Filter, Clock, Star, Navigation, Users } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { UserButton, useUser } from '@clerk/nextjs'
 import LanguagePicker from '../../components/LanguagePicker'
 import { useLanguage } from '../../lib/LanguageContext'
 import { getTranslation } from '../../lib/translations'
@@ -109,6 +110,7 @@ const mockPharmacies = [
 
 export default function PharmacyPage() {
   const { selectedLanguage } = useLanguage()
+  const { user } = useUser()
   const [serviceType, setServiceType] = useState<'clinic' | 'pharmacy'>('pharmacy')
   const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -133,18 +135,34 @@ export default function PharmacyPage() {
               </span>
             </Link>
             <div className="flex items-center space-x-4">
-              <Link href="/search" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                {getTranslation(selectedLanguage.code, 'clinic')}
-              </Link>
-              <Link href="/pharmacy" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
-                {getTranslation(selectedLanguage.code, 'pharmacy')}
-              </Link>
-              <Link href="/profile" className="text-gray-700 hover:text-emerald-600 transition-colors">
-                {getTranslation(selectedLanguage.code, 'profile')}
-              </Link>
-              
-              {/* Shared Language Picker */}
-              <LanguagePicker variant="header" />
+              <div className="hidden sm:flex items-center space-x-4">
+                <Link href="/search" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+                  {getTranslation(selectedLanguage.code, 'clinic')}
+                </Link>
+                <Link href="/pharmacy" className="text-gray-700 hover:text-emerald-600 transition-colors font-medium">
+                  {getTranslation(selectedLanguage.code, 'pharmacy')}
+                </Link>
+                <Link href="/profile" className="text-gray-700 hover:text-emerald-600 transition-colors">
+                  {getTranslation(selectedLanguage.code, 'profile')}
+                </Link>
+                <LanguagePicker variant="header" />
+              </div>
+              {user ? (
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8"
+                    }
+                  }}
+                />
+              ) : (
+                <Link 
+                  href="/sign-in"
+                  className="bg-gradient-to-r from-emerald-600 to-cyan-600 text-white px-4 py-2 rounded-xl hover:from-emerald-700 hover:to-cyan-700 transition-all duration-200 text-sm font-medium"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </div>

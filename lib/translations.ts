@@ -17,6 +17,20 @@ export const translations = {
     search: 'Search',
     showAll: 'Show all services',
     
+    // Authentication
+    signIn: 'Sign In',
+    signUp: 'Sign Up',
+    signOut: 'Sign Out',
+    welcomeBack: 'Welcome back',
+    createAccount: 'Create your account',
+    signInSubtitle: 'Sign in to your MON DOKTER account',
+    signUpSubtitle: 'Join MON DOKTER and manage your healthcare',
+    noAccount: "Don't have an account?",
+    haveAccount: 'Already have an account?',
+    signUpHere: 'Sign up here',
+    signInHere: 'Sign in here',
+    findDoctor: 'Find Doctor',
+    
     // Features
     whyChoose: 'Why choose MON DOKTER',
     healthcareSimple: 'Healthcare made simple in paradise',
@@ -94,6 +108,20 @@ export const translations = {
     search: 'Rechercher',
     showAll: 'Voir tous les services',
     
+    // Authentication
+    signIn: 'Se connecter',
+    signUp: "S'inscrire",
+    signOut: 'Se déconnecter',
+    welcomeBack: 'Bon retour',
+    createAccount: 'Créer votre compte',
+    signInSubtitle: 'Connectez-vous à votre compte MON DOKTER',
+    signUpSubtitle: 'Rejoignez MON DOKTER et gérez votre santé',
+    noAccount: "Vous n'avez pas de compte?",
+    haveAccount: 'Vous avez déjà un compte?',
+    signUpHere: 'Inscrivez-vous ici',
+    signInHere: 'Connectez-vous ici',
+    findDoctor: 'Trouver un Médecin',
+    
     // Features
     whyChoose: 'Pourquoi choisir MON DOKTER',
     healthcareSimple: 'Santé simplifiée au paradis',
@@ -170,6 +198,20 @@ export const translations = {
     profile: 'Profil',
     search: 'Serser',
     showAll: 'Montre tou servis',
+    
+    // Authentication
+    signIn: 'Konekte',
+    signUp: 'Enskrire',
+    signOut: 'Dekonekte',
+    welcomeBack: 'Bonvini ankor',
+    createAccount: 'Kreye ou kont',
+    signInSubtitle: 'Konekte dan ou kont MON DOKTER',
+    signUpSubtitle: 'Zwenn MON DOKTER ek zerir ou lasante',
+    noAccount: 'Ou pa ena kont?',
+    haveAccount: 'Ou deza ena kont?',
+    signUpHere: 'Enskrire isit',
+    signInHere: 'Konekte isit',
+    findDoctor: 'Ganny Dokter',
     
     // Features
     whyChoose: 'Kifer swazir MON DOKTER',

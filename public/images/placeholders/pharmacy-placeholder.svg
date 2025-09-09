@@ -1,0 +1,13 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f0fdf4"/>
+  <rect x="50" y="80" width="300" height="140" rx="20" fill="#dcfce7"/>
+  <rect x="70" y="100" width="260" height="100" rx="10" fill="#bbf7d0"/>
+  <circle cx="200" cy="150" r="40" fill="#22c55e"/>
+  <path d="M180 150h40M200 130v40" stroke="white" stroke-width="6" stroke-linecap="round"/>
+  <rect x="120" y="120" width="20" height="30" rx="5" fill="#16a34a"/>
+  <rect x="260" y="120" width="20" height="30" rx="5" fill="#16a34a"/>
+  <rect x="120" y="160" width="20" height="20" rx="5" fill="#15803d"/>
+  <rect x="260" y="160" width="20" height="20" rx="5" fill="#15803d"/>
+  <text x="200" y="250" text-anchor="middle" fill="#15803d" font-family="system-ui" font-size="16" font-weight="600">Pharmacy</text>
+  <text x="200" y="270" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="12">Healthcare & Wellness</text>
+</svg>
